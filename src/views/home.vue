@@ -22,7 +22,7 @@
         <el-col :xs="24" :sm="24" :lg="8">
           <div class="chart-wrapper">
             <bar-chart />
-          </div>
+          </div> <div>eee</div>
         </el-col>
       </el-row>
     </div>
