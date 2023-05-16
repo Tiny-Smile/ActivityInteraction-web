@@ -55,9 +55,9 @@
         <el-table-column prop="address" label="活动地点" />
         <el-table-column prop="dateTime" label="活动时间" />
         <el-table-column prop="joinPeople" label="参加对象" />
-        <el-table-column prop="id" label="id" />
+        <!-- <el-table-column prop="id" label="id" /> -->
         <el-table-column prop="type" label="活动类型" />
-        <el-table-column prop="status" label="0: 结束，other：进行中" />
+        <el-table-column prop="status" label="状态" />
         <el-table-column v-if="checkPer(['admin','activityAll:edit','activityAll:del'])" label="操作" width="150px" align="center">
           <template slot-scope="scope">
             <udOperation
