@@ -13,9 +13,9 @@
       <!--表单组件-->
       <el-dialog :close-on-click-modal="false" :before-close="crud.cancelCU" :visible.sync="crud.status.cu > 0" :title="crud.status.title" width="500px">
         <el-form ref="form" :model="form" :rules="rules" size="small" label-width="80px">
-          <!--          <el-form-item label="活动id" prop="actiId">-->
-          <!--            <el-input v-model="form.actiId" style="width: 370px;" />-->
-          <!--          </el-form-item>-->
+          <el-form-item label="活动id" prop="actiId">
+            <el-input v-model="form.actiId" style="width: 370px;" />
+          </el-form-item>
           <el-form-item label="活动主题" prop="theme">
             <el-input v-model="form.theme" style="width: 370px;" />
           </el-form-item>
@@ -31,6 +31,15 @@
           <el-form-item label="参加对象">
             <el-input v-model="form.joinPeople" style="width: 370px;" />
           </el-form-item>
+          <el-form-item label="id">
+            <el-input v-model="form.id" style="width: 370px;" />
+          </el-form-item>
+          <el-form-item label="活动类型">
+            未设置字典，请手动设置 Select
+          </el-form-item>
+          <el-form-item label="0: 结束，other：进行中">
+            未设置字典，请手动设置 Select
+          </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button type="text" @click="crud.cancelCU">取消</el-button>
@@ -40,12 +49,15 @@
       <!--表格渲染-->
       <el-table ref="table" v-loading="crud.loading" :data="crud.data" size="small" style="width: 100%;" @selection-change="crud.selectionChangeHandler">
         <el-table-column type="selection" width="55" />
-        <!--        <el-table-column prop="actiId" label="活动id" />-->
+        <el-table-column prop="actiId" label="活动id" />
         <el-table-column prop="theme" label="活动主题" />
         <el-table-column prop="deptId" label="主办方" />
         <el-table-column prop="address" label="活动地点" />
         <el-table-column prop="dateTime" label="活动时间" />
         <el-table-column prop="joinPeople" label="参加对象" />
+        <el-table-column prop="id" label="id" />
+        <el-table-column prop="type" label="活动类型" />
+        <el-table-column prop="status" label="0: 结束，other：进行中" />
         <el-table-column v-if="checkPer(['admin','activityAll:edit','activityAll:del'])" label="操作" width="150px" align="center">
           <template slot-scope="scope">
             <udOperation
@@ -69,13 +81,13 @@ import crudOperation from '@crud/CRUD.operation'
 import udOperation from '@crud/UD.operation'
 import pagination from '@crud/Pagination'
 
-const defaultForm = { actiId: null, theme: null, deptId: null, address: null, dateTime: null, joinPeople: null }
+const defaultForm = { actiId: null, theme: null, deptId: null, address: null, dateTime: null, joinPeople: null, id: null, type: null, status: null }
 export default {
   name: 'ActivityAll',
   components: { pagination, crudOperation, rrOperation, udOperation },
   mixins: [presenter(), header(), form(defaultForm), crud()],
   cruds() {
-    return CRUD({ title: '所有活动', url: 'api/activityAll', idField: 'actiId', sort: 'actiId,desc', crudMethod: { ...crudActivityAll }})
+    return CRUD({ title: '所有活动', url: 'api/activityAll', idField: 'id', sort: 'id,desc', crudMethod: { ...crudActivityAll }})
   },
   data() {
     return {

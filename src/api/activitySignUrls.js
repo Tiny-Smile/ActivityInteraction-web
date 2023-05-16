@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function add(data) {
   return request({
-    url: 'api/activityAll',
+    url: 'api/activitySignUrls',
     method: 'post',
     data
   })
@@ -10,7 +10,7 @@ export function add(data) {
 
 export function del(ids) {
   return request({
-    url: 'api/activityAll/',
+    url: 'api/activitySignUrls/',
     method: 'delete',
     data: ids
   })
@@ -18,17 +18,10 @@ export function del(ids) {
 
 export function edit(data) {
   return request({
-    url: 'api/activityAll',
+    url: 'api/activitySignUrls',
     method: 'put',
     data
   })
 }
 
-  export function test() {
-    return request({
-      url: 'api/activity/download',
-      method: 'get',
-    })
-}
-
-export default { add, edit, del, test }
+export default { add, edit, del }
