@@ -24,5 +24,4 @@ export function edit(data) {
   })
 }
 
-
-export default { add, edit, del, getSignQrcode }
+export default { add, edit, del }
