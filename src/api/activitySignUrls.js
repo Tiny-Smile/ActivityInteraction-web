@@ -23,13 +23,13 @@ export function edit(data) {
     data
   })
 }
-// 生成二维码url
-export function generateQR(params) {
+
+//获取签到二维码
+export function getSignQrcode(acti_id){
   return request({
-    url: 'api/activitySignUrls/generate_sign_qrcode',
-    method: 'get',
-    params: params
+    url: 'api/activitySignUrls/generate_sign_qrcode?acti_id='+acti_id,
+    method: 'get'
   })
 }
 
-export default { add, edit, del, generateQR }
+export default { add, edit, del, getSignQrcode }

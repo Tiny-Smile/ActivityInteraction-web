@@ -7,19 +7,19 @@
 <script>
 import QRCode from 'qrcodejs2'
 // import {generateQR} from "../../../../../api/activitySignUrls";
-// import { generateQR } from '@/api/activitySignUrls'
+import { getSignQrcode } from '@/api/activitySignUrls'
 export default {
   name: 'QrCode',
   data() {
     return {
-      actiId: undefined,
+      actiId: '1658118255048527872',
       timer: undefined,
       qrcode: undefined
     }
   },
   watch: {
     $route: {
-      handler: function(route) {
+      handler: function (route) {
         console.log('watch')
         console.log(route)
         // 监听路由是否变化
@@ -37,17 +37,17 @@ export default {
   },
   methods: {
     creatQrCode() {
-      // generateQR({acti_id: this.actiId }).then(res => {
-      //   console.log(res);
-      return new QRCode(this.$refs.qrCodeUrl, {
-        // text: "https://blog.csdn.net/weixin_42601136", // 需要转换为二维码的内容
-        text: 'http://localhost:8013/signMobile', // 需要转换为二维码的内容
-        width: 360,
-        height: 360,
-        colorDark: '#e7cd7f',
-        correctLevel: QRCode.CorrectLevel.L
+      getSignQrcode('1658118255048527872').then(res => {
+        console.log(res);
+        return new QRCode(this.$refs.qrCodeUrl, {
+          // text: "https://blog.csdn.net/weixin_42601136", // 需要转换为二维码的内容
+          text: res.signQrcode, // 需要转换为二维码的内容
+          width: 360,
+          height: 360,
+          colorDark: '#e7cd7f',
+          correctLevel: QRCode.CorrectLevel.L
+        })
       })
-      // })
     },
     start() {
       if (this.timer) {

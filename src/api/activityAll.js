@@ -24,11 +24,5 @@ export function edit(data) {
   })
 }
 
-export function test() {
-  return request({
-    url: 'api/activity/download',
-    method: 'get'
-  })
-}
 
-export default { add, edit, del, test }
+export default { add, edit, del, getSignQrcode }
