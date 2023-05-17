@@ -61,13 +61,13 @@
         <el-table-column v-if="checkPer(['admin','activityAll:edit','activityAll:del'])" label="操作" width="150px" align="center">
           <template slot-scope="scope">
             <span>
-               <udOperation
-                 :data="scope.row"
-                 :permission="permission"
-               />
-            <el-button  @click="design(scope.row)" style="display: inline" >
-              <i class="el-icon-setting" style='margin-right:5px'></i>
-            </el-button>
+              <udOperation
+                :data="scope.row"
+                :permission="permission"
+              />
+              <el-button style="display: inline" @click="design(scope.row)">
+                <i class="el-icon-setting" style="margin-right:5px" />
+              </el-button>
             </span>
           </template>
         </el-table-column>
@@ -76,18 +76,18 @@
       <pagination />
       <!-- 签到弹框-->
       <el-dialog :title="designTitle" :visible.sync="designVisible" fullscreen append-to-body @close="designVisible = false">
-        <el-tabs v-model="activeName" @tab-click="handleTabClick" >
-          <el-tab-pane label="签到" name="sign" :key="'first'">
-            <SignDesign v-if="activeName === 'sign'"  :activityMsg="currentActivityMsg"/>
+        <el-tabs v-model="activeName" @tab-click="handleTabClick">
+          <el-tab-pane :key="'first'" label="签到" name="sign">
+            <SignDesign v-if="activeName === 'sign'" :activity-msg="currentActivityMsg" />
           </el-tab-pane>
-          <el-tab-pane label="抽奖" name="prize" :key="'prize'">
-            <PrizeDesign v-if="activeName === 'prize'" :activityMsg="currentActivityMsg"/>
+          <el-tab-pane :key="'prize'" label="抽奖" name="prize">
+            <PrizeDesign v-if="activeName === 'prize'" :activity-msg="currentActivityMsg" />
           </el-tab-pane>
-          <el-tab-pane label="投票" name="vote" :key="'vote'">
-            <SignDesign v-if="activeName === 'vote'"/>
+          <el-tab-pane :key="'vote'" label="投票" name="vote">
+            <SignDesign v-if="activeName === 'vote'" />
           </el-tab-pane>
-          <el-tab-pane label="评分" name="score" :key="'score'">
-            <SignDesign v-if="activeName === 'score'"/>
+          <el-tab-pane :key="'score'" label="评分" name="score">
+            <SignDesign v-if="activeName === 'score'" />
           </el-tab-pane>
         </el-tabs>
 
@@ -136,7 +136,7 @@ export default {
       // 设计
       designTitle: '',
       designVisible: false,
-      activeName: 'sign',
+      activeName: 'sign'
     }
   },
   methods: {

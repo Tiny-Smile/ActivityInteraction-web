@@ -37,62 +37,62 @@
 </template>
 
 <script>
-  import crudActivityAll from '@/api/activityAll'
-  import CRUD, { presenter, header, form, crud } from '@crud/crud'
-  import rrOperation from '@crud/RR.operation'
-  import crudOperation from '@crud/CRUD.operation'
-  import udOperation from '@crud/UD.operation'
-  import pagination from '@crud/Pagination'
+import crudActivityAll from '@/api/activityAll'
+import CRUD, { presenter, header, form, crud } from '@crud/crud'
+import rrOperation from '@crud/RR.operation'
+import crudOperation from '@crud/CRUD.operation'
+import udOperation from '@crud/UD.operation'
+import pagination from '@crud/Pagination'
 
-  const defaultForm = { actiId: null, theme: null, deptId: null, address: null, dateTime: null, joinPeople: null, id: null, type: null, status: null }
-  export default {
-    name: 'ActivityAll',
-    components: { pagination, crudOperation, rrOperation, udOperation },
-    mixins: [presenter(), header(), form(defaultForm), crud()],
-    cruds() {
-      return CRUD({ title: '所有活动', url: 'api/activityAll', idField: 'id', sort: 'id,desc', crudMethod: { ...crudActivityAll }})
-    },
-    data() {
-      return {
-        permission: {
-          add: ['admin', 'activityAll:add'],
-          edit: ['admin', 'activityAll:edit'],
-          del: ['admin', 'activityAll:del']
-        },
-        rules: {
-          actiId: [
-            { required: true, message: '活动id不能为空', trigger: 'blur' }
-          ],
-          theme: [
-            { required: true, message: '活动主题不能为空', trigger: 'blur' }
-          ]
-        },
-        queryTypeOptions: [
-          { key: 'theme', display_name: '活动主题' }
+const defaultForm = { actiId: null, theme: null, deptId: null, address: null, dateTime: null, joinPeople: null, id: null, type: null, status: null }
+export default {
+  name: 'ActivityAll',
+  components: { pagination, crudOperation, rrOperation, udOperation },
+  mixins: [presenter(), header(), form(defaultForm), crud()],
+  cruds() {
+    return CRUD({ title: '所有活动', url: 'api/activityAll', idField: 'id', sort: 'id,desc', crudMethod: { ...crudActivityAll }})
+  },
+  data() {
+    return {
+      permission: {
+        add: ['admin', 'activityAll:add'],
+        edit: ['admin', 'activityAll:edit'],
+        del: ['admin', 'activityAll:del']
+      },
+      rules: {
+        actiId: [
+          { required: true, message: '活动id不能为空', trigger: 'blur' }
         ],
-        currentActivityMsg: {},
-        // 设计
-        designTitle: '',
-        designVisible: false,
-        activeName: 'sign',
-      }
-    },
-    methods: {
-      // 钩子：在获取表格数据之前执行，false 则代表不获取数据
-      [CRUD.HOOK.beforeRefresh]() {
-        return true
+        theme: [
+          { required: true, message: '活动主题不能为空', trigger: 'blur' }
+        ]
       },
+      queryTypeOptions: [
+        { key: 'theme', display_name: '活动主题' }
+      ],
+      currentActivityMsg: {},
       // 设计
-      design(row) {
-        this.designVisible = true
-        this.designTitle = '设计' + row.theme
-        this.currentActivityMsg = row
-      },
-      handleTabClick() {
+      designTitle: '',
+      designVisible: false,
+      activeName: 'sign'
+    }
+  },
+  methods: {
+    // 钩子：在获取表格数据之前执行，false 则代表不获取数据
+    [CRUD.HOOK.beforeRefresh]() {
+      return true
+    },
+    // 设计
+    design(row) {
+      this.designVisible = true
+      this.designTitle = '设计' + row.theme
+      this.currentActivityMsg = row
+    },
+    handleTabClick() {
 
-      }
     }
   }
+}
 </script>
 
 <style scoped>

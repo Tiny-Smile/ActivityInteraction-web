@@ -3,10 +3,10 @@
 
     <div class="title">素质能力大赛</div>
 
-    <div class="main" v-show="!winModalVisible">
+    <div v-show="!winModalVisible" class="main">
       <div class="bgContainer bgLeft">
         <div class="glass-container">
-          参与人数：{{participateCount}}
+          参与人数：{{ participateCount }}
         </div>
         <div class="glass-container count-contain">
           <div class="count-span">每次抽取人数：</div>
@@ -27,118 +27,117 @@
         </div>
         <div class="lotBtn">
           <!--  抽奖按钮 -->
-          <CoolButton @click.native="startLottery" v-if="!isRunning" :disabled="count + lotteryResults.length > participants.length">开始抽奖</CoolButton>
-          <CoolButton @click.native="stopLottery"  v-if="isRunning">停止</CoolButton>
+          <CoolButton v-if="!isRunning" :disabled="count + lotteryResults.length > participants.length" @click.native="startLottery">开始抽奖</CoolButton>
+          <CoolButton v-if="isRunning" @click.native="stopLottery">停止</CoolButton>
         </div>
 
       </div>
 
       <div class="bgContainer bgRight">
-        <div>已中奖 {{lotteryResults.length}} 人</div>
-        <el-divider></el-divider>
-        <div v-for="item in lotteryResults">{{item}}</div>
+        <div>已中奖 {{ lotteryResults.length }} 人</div>
+        <el-divider />
+        <div v-for="item in lotteryResults">{{ item }}</div>
       </div>
 
     </div>
 
-    <WinModal v-if="winModalVisible" class="winModal" :winners="toWin" @close="closeModal"></WinModal>
-
+    <WinModal v-if="winModalVisible" class="winModal" :winners="toWin" @close="closeModal" />
 
   </div>
 </template>
 
 <script>
-  import CoolButton from "../../../components/CoolButton";
-  import WinModal from "./winModal";
-  export default {
-    components: { CoolButton, WinModal },
-    data() {
-      return {
-        interval: '',
-        participateCount: 5, // 参与人数
-        participants: ['024874', '024873', '024855', '024866', '024877'], // 参与抽奖的人员列表
-        isRunning: false, // 是否正在进行抽奖
-        winner: null, // 抽奖结果
-        lotteryResults: [], // 抽奖结果 多个
-        // 要抽的人
-        toWin: [''],
-        avatarList: [{
-          userNo: '024874',
-          name: '一只小猪谢谢谢谢谢谢',
-        },{
-          userNo: '024874',
-          name: '一只小猪',
-        },{
-          userNo: '024874',
-          name: '一只小猪',
-        },],
-        // 计数器
-        count: 1,
-        // 中奖
-        winModalVisible: false,
-        // 验证
-        validate: true
-
-      };
-    },
-    watch: {
-      count(val) {
-        this.toWin = Array(val).fill('')
-      }
-    },
-    methods: {
-      validateBol() {
-        if (this.lotteryResults.length === this.participants.length) {
-          this.$message.warning('已经全部抽取出来啦！')
-          return false
-        }
-        if (this.count + this.lotteryResults.length > this.participants.length) {
-          this.$message.warning('请检查抽取人数是否超出可选范围！')
-          return false
-        }
-        return true
-      },
-      startLottery() {
-        this.validate = this.validateBol()
-        if (!this.validate) {
-          return;
-        }
-        if (this.isRunning) return;
-        this.isRunning = true;
-        const intervalTime = 100;
-        this.interval = setInterval(() => {
-          // 随机选择中奖人员
-          // const randomIndex = Math.floor(Math.random() * this.participants.length);
-          // this.winner = this.participants[randomIndex];
-          // 可以重复中奖
-          this.toWin = this.toWin.map(item => { return this.participants[Math.floor(Math.random() * this.participants.length)]})
-        }, intervalTime);
-      },
-      stopLottery() {
-        clearInterval(this.interval);
-        this.isRunning = false;
-        this.winModalVisible = true
-        this.lotteryResults = this.lotteryResults.concat(this.toWin)
-        console.log(this.toWin);
-      },
+import CoolButton from '../../../components/CoolButton'
+import WinModal from './winModal'
+export default {
+  components: { CoolButton, WinModal },
+  data() {
+    return {
+      interval: '',
+      participateCount: 5, // 参与人数
+      participants: ['024874', '024873', '024855', '024866', '024877'], // 参与抽奖的人员列表
+      isRunning: false, // 是否正在进行抽奖
+      winner: null, // 抽奖结果
+      lotteryResults: [], // 抽奖结果 多个
+      // 要抽的人
+      toWin: [''],
+      avatarList: [{
+        userNo: '024874',
+        name: '一只小猪谢谢谢谢谢谢'
+      }, {
+        userNo: '024874',
+        name: '一只小猪'
+      }, {
+        userNo: '024874',
+        name: '一只小猪'
+      }],
       // 计数器
-      increment() {
-        if (this.count < this.participateCount) {
-          this.count++;
-        }
-      },
-      decrement() {
-        if (this.count > 1) {
-          this.count--;
-        }
-      },
-      // 关闭弹框
-      closeModal() {
-        this.winModalVisible = false
-        this.toWin = Array(this.count).fill('')
-      }
+      count: 1,
+      // 中奖
+      winModalVisible: false,
+      // 验证
+      validate: true
+
     }
-  };
+  },
+  watch: {
+    count(val) {
+      this.toWin = Array(val).fill('')
+    }
+  },
+  methods: {
+    validateBol() {
+      if (this.lotteryResults.length === this.participants.length) {
+        this.$message.warning('已经全部抽取出来啦！')
+        return false
+      }
+      if (this.count + this.lotteryResults.length > this.participants.length) {
+        this.$message.warning('请检查抽取人数是否超出可选范围！')
+        return false
+      }
+      return true
+    },
+    startLottery() {
+      this.validate = this.validateBol()
+      if (!this.validate) {
+        return
+      }
+      if (this.isRunning) return
+      this.isRunning = true
+      const intervalTime = 100
+      this.interval = setInterval(() => {
+        // 随机选择中奖人员
+        // const randomIndex = Math.floor(Math.random() * this.participants.length);
+        // this.winner = this.participants[randomIndex];
+        // 可以重复中奖
+        this.toWin = this.toWin.map(item => { return this.participants[Math.floor(Math.random() * this.participants.length)] })
+      }, intervalTime)
+    },
+    stopLottery() {
+      clearInterval(this.interval)
+      this.isRunning = false
+      this.winModalVisible = true
+      this.lotteryResults = this.lotteryResults.concat(this.toWin)
+      console.log(this.toWin)
+    },
+    // 计数器
+    increment() {
+      if (this.count < this.participateCount) {
+        this.count++
+      }
+    },
+    decrement() {
+      if (this.count > 1) {
+        this.count--
+      }
+    },
+    // 关闭弹框
+    closeModal() {
+      this.winModalVisible = false
+      this.toWin = Array(this.count).fill('')
+    }
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -197,7 +196,6 @@
       color: white;
     }
 
-
     .avatarItem {
       border: 4px solid rgba(0, 0, 0, 0.1);
       /*border-left-color: #59a782;*/
@@ -220,7 +218,6 @@
       animation: donut-spin-back 1.2s linear infinite;
       @include spin-animation;
     }
-
 
     .main {
       width: 80%;
@@ -301,8 +298,6 @@
             color: white;
           }
         }
-
-
 
       }
       .bgCenter {

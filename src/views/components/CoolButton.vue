@@ -1,16 +1,16 @@
 <template>
   <el-button class="button-bevel orange" :disabled="disabled">
-    <slot></slot>
+    <slot />
   </el-button>
 </template>
 
 <script>
-  export default {
-    name: 'Button',
-    props: {
-      disabled: Boolean
-    }
-  };
+export default {
+  name: 'Button',
+  props: {
+    disabled: Boolean
+  }
+}
 </script>
 
 <style scoped>

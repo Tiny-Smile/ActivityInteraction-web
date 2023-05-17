@@ -13,8 +13,8 @@
     </el-row>
     <div style="display:flex;">
       <div v-for="(item, key) in avatarList" :key="key" class="avatarItem">
-        <el-avatar shape="circle" :size="90" icon="el-icon-user-solid">{{item.name}}</el-avatar>
-        <div class="avatarName">{{item.name}}</div>
+        <el-avatar shape="circle" :size="90" icon="el-icon-user-solid">{{ item.name }}</el-avatar>
+        <div class="avatarName">{{ item.name }}</div>
       </div>
     </div>
 
@@ -22,70 +22,70 @@
 </template>
 
 <script>
-  export default {
-    name: 'index',
-    props: {
-      activityMsg: Object
-    },
-    data() {
-      return {
-        currentActivityMsg: {},
-        circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-        avatarList: [{
-          name: '一只小猪',
-        },{
-          name: '一只小猪',
-        },{
-          name: '一只小猪',
-        },{
-          name: '一只小猪',
-        },{
-          name: '一只小猪',
-        },{
-          name: '一只小猪',
-        },{
-          name: '一只小猪',
-        },{
-          name: '一只小猪',
-        }]
-      }
-    },
-    created() {
-      this.currentActivityMsg = this.activityMsg
-    },
-    watch: {
-      activityMsg: {
-        handler(val) {
-          this.currentActivityMsg = val
-        },
-        immediate: true
-      }
-    },
-    methods: {
-      // 查看签到页面
-      previewSignPage() {
-        let routeData = this.$router.resolve({
-          path: "/activity/sign",
-          query: { actiId: this.currentActivityMsg.actiId, activityName: this.currentActivityMsg.theme },
-          // params: { activityName: this.currentActivityMsg.theme }
-        })
-        window.open(routeData.href,  '_blank')
+export default {
+  name: 'Index',
+  props: {
+    activityMsg: Object
+  },
+  data() {
+    return {
+      currentActivityMsg: {},
+      circleUrl: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
+      avatarList: [{
+        name: '一只小猪'
+      }, {
+        name: '一只小猪'
+      }, {
+        name: '一只小猪'
+      }, {
+        name: '一只小猪'
+      }, {
+        name: '一只小猪'
+      }, {
+        name: '一只小猪'
+      }, {
+        name: '一只小猪'
+      }, {
+        name: '一只小猪'
+      }]
+    }
+  },
+  watch: {
+    activityMsg: {
+      handler(val) {
+        this.currentActivityMsg = val
       },
-      // 查看二维码
-      handleSignQRCode() {
-        const query = {
-          actiId: this.currentActivityMsg.actiId
+      immediate: true
+    }
+  },
+  created() {
+    this.currentActivityMsg = this.activityMsg
+  },
+  methods: {
+    // 查看签到页面
+    previewSignPage() {
+      const routeData = this.$router.resolve({
+        path: '/activity/sign',
+        query: { actiId: this.currentActivityMsg.actiId, activityName: this.currentActivityMsg.theme }
+        // params: { activityName: this.currentActivityMsg.theme }
+      })
+      window.open(routeData.href, '_blank')
+    },
+    // 查看二维码
+    handleSignQRCode() {
+      const query = {
+        actiId: this.currentActivityMsg.actiId
 
-        }
-        console.log(query);
-        let routeData = this.$router.resolve({
-          path: "/signQRCode",
-          query: query
-        })
-        window.open(routeData.href, '_blank')
       }
+      console.log(query)
+      const routeData = this.$router.resolve({
+        path: '/signQRCode',
+        query: query
+      })
+      window.open(routeData.href, '_blank')
     }
   }
+}
 </script>
 
 <style scoped lang="scss">

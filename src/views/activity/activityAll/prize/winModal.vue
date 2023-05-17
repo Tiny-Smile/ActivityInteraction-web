@@ -1,7 +1,7 @@
 <template>
-  <div class="main bgContainer" >
+  <div class="main bgContainer">
 
-    <div>恭喜{{winners.toString()}}中奖！</div>
+    <div>恭喜{{ winners.toString() }}中奖！</div>
 
     <el-button class="closeBtn" @click="$emit('close')">关闭</el-button>
 
@@ -9,12 +9,12 @@
 </template>
 
 <script>
-  export default {
-    name: "winModal",
-    props: {
-      winners: Array
-    }
+export default {
+  name: 'WinModal',
+  props: {
+    winners: Array
   }
+}
 </script>
 
 <style scoped lang="scss">
@@ -62,7 +62,5 @@
     position: fixed;
     bottom: 30px;
   }
-
-
 
 </style>

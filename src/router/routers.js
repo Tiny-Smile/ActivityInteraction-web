@@ -72,7 +72,7 @@ export const constantRouterMap = [
     component: (resolve) => require(['@/views/activity/activityAll/prize/Lottery'], resolve),
     name: 'lottery',
     meta: { title: '抽奖' }
-  },
+  }
 ]
 
 export default new Router({
