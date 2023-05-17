@@ -51,6 +51,7 @@
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
     "path-to-regexp": "2.4.0",
+    "qrcodejs2": "0.0.2",
     "qs": "^6.10.1",
     "screenfull": "4.2.0",
     "sortablejs": "1.8.4",
@@ -67,6 +68,8 @@
     "xlsx": "^0.17.4"
   },
   "devDependencies": {
+    "@babel/core": "^7.21.8",
+    "@babel/eslint-parser": "^7.21.8",
     "@babel/parser": "^7.7.4",
     "@babel/register": "7.0.0",
     "@vue/babel-plugin-transform-vue-jsx": "^1.2.1",
@@ -83,9 +86,9 @@
     "babel-plugin-transform-remove-console": "^6.9.4",
     "chalk": "2.4.2",
     "chokidar": "2.1.5",
-    "connect": "3.6.6",
     "compression-webpack-plugin": "5.0.2",
-    "eslint": "5.15.3",
+    "connect": "3.6.6",
+    "eslint": "^5.15.3",
     "eslint-plugin-vue": "5.2.2",
     "html-webpack-plugin": "3.2.0",
     "http-proxy-middleware": "^0.19.1",

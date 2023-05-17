@@ -57,7 +57,22 @@ export const constantRouterMap = [
         meta: { title: '个人中心' }
       }
     ]
-  }
+  },
+  { path: '/activity/sign',
+    component: (resolve) => require(['@/views/activity/activityAll/sign/mobile/page'], resolve),
+    name: 'signPage',
+    meta: { title: '活动签到' }
+  },
+  { path: '/signQRCode',
+    component: (resolve) => require(['@/views/activity/activityAll/sign/mobile/qrCode'], resolve),
+    name: 'signQRCode',
+    meta: { title: '签到二维码' }
+  },
+  { path: '/lottery:id',
+    component: (resolve) => require(['@/views/activity/activityAll/prize/Lottery'], resolve),
+    name: 'lottery',
+    meta: { title: '抽奖' }
+  },
 ]
 
 export default new Router({

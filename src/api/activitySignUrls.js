@@ -23,5 +23,13 @@ export function edit(data) {
     data
   })
 }
+// 生成二维码url
+export function generateQR(params) {
+  return request({
+    url: 'api/activitySignUrls/generate_sign_qrcode',
+    method: 'get',
+    params: params
+  })
+}
 
-export default { add, edit, del }
+export default { add, edit, del, generateQR }

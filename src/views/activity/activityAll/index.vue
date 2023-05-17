@@ -60,15 +60,38 @@
         <el-table-column prop="status" label="状态" />
         <el-table-column v-if="checkPer(['admin','activityAll:edit','activityAll:del'])" label="操作" width="150px" align="center">
           <template slot-scope="scope">
-            <udOperation
-              :data="scope.row"
-              :permission="permission"
-            />
+            <span>
+               <udOperation
+                 :data="scope.row"
+                 :permission="permission"
+               />
+            <el-button  @click="design(scope.row)" style="display: inline" >
+              <i class="el-icon-setting" style='margin-right:5px'></i>
+            </el-button>
+            </span>
           </template>
         </el-table-column>
       </el-table>
       <!--分页组件-->
       <pagination />
+      <!-- 签到弹框-->
+      <el-dialog :title="designTitle" :visible.sync="designVisible" fullscreen append-to-body @close="designVisible = false">
+        <el-tabs v-model="activeName" @tab-click="handleTabClick" >
+          <el-tab-pane label="签到" name="sign" :key="'first'">
+            <SignDesign v-if="activeName === 'sign'"  :activityMsg="currentActivityMsg"/>
+          </el-tab-pane>
+          <el-tab-pane label="抽奖" name="prize" :key="'prize'">
+            <PrizeDesign v-if="activeName === 'prize'" :activityMsg="currentActivityMsg"/>
+          </el-tab-pane>
+          <el-tab-pane label="投票" name="vote" :key="'vote'">
+            <SignDesign v-if="activeName === 'vote'"/>
+          </el-tab-pane>
+          <el-tab-pane label="评分" name="score" :key="'score'">
+            <SignDesign v-if="activeName === 'score'"/>
+          </el-tab-pane>
+        </el-tabs>
+
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -80,11 +103,13 @@ import rrOperation from '@crud/RR.operation'
 import crudOperation from '@crud/CRUD.operation'
 import udOperation from '@crud/UD.operation'
 import pagination from '@crud/Pagination'
+import SignDesign from '@/views/activity/activityAll/sign/index'
+import PrizeDesign from '@/views/activity/activityAll/prize/index'
 
 const defaultForm = { actiId: null, theme: null, deptId: null, address: null, dateTime: null, joinPeople: null, id: null, type: null, status: null }
 export default {
   name: 'ActivityAll',
-  components: { pagination, crudOperation, rrOperation, udOperation },
+  components: { pagination, crudOperation, rrOperation, udOperation, SignDesign, PrizeDesign },
   mixins: [presenter(), header(), form(defaultForm), crud()],
   cruds() {
     return CRUD({ title: '所有活动', url: 'api/activityAll', idField: 'id', sort: 'id,desc', crudMethod: { ...crudActivityAll }})
@@ -106,13 +131,27 @@ export default {
       },
       queryTypeOptions: [
         { key: 'theme', display_name: '活动主题' }
-      ]
+      ],
+      currentActivityMsg: {},
+      // 设计
+      designTitle: '',
+      designVisible: false,
+      activeName: 'sign',
     }
   },
   methods: {
     // 钩子：在获取表格数据之前执行，false 则代表不获取数据
     [CRUD.HOOK.beforeRefresh]() {
       return true
+    },
+    // 设计
+    design(row) {
+      this.designVisible = true
+      this.designTitle = '设计' + row.theme
+      this.currentActivityMsg = row
+    },
+    handleTabClick() {
+
     }
   }
 }
