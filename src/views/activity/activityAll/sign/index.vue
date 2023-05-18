@@ -18,15 +18,19 @@
       </div>
     </div>
 
+    <SignList></SignList>
+
   </div>
 </template>
 
 <script>
+  import SignList from './signList/index'
 export default {
   name: 'Index',
   props: {
     activityMsg: Object
   },
+  components: {SignList},
   data() {
     return {
       currentActivityMsg: {},

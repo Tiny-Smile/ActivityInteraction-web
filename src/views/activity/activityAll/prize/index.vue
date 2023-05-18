@@ -20,17 +20,21 @@
                 开始
               </router-link>
             </el-button>
-            <el-button size="mini" style="margin-left: -1px;margin-right: 2px" type="text" @click="toDownload(scope.row.tableName)">编辑</el-button>
-            <el-button size="mini" style="margin-left: -1px;margin-right: 2px" type="text">
-              <router-link :to="'/xx' + scope.row.id">
-                查看中奖信息
-              </router-link>
-            </el-button>
+            <el-button size="mini" style="margin-left: -1px;margin-right: 2px" type="text" @click="toDownload(scope.row.id)">编辑</el-button>
+            <el-button size="mini" style="margin-left: -1px;margin-right: 2px" type="text" @click="detailWinList()">查看中奖信息</el-button>
           </template>
         </el-table-column>
       </el-table>
       <!--分页组件-->
       <pagination />
+
+      <!-- 签到弹框-->
+      <el-dialog :title="winTitle" :visible.sync="winVisible" fullscreen append-to-body @close="winVisible = false">
+        <WinList>
+
+        </WinList>
+
+      </el-dialog>
 
     </div>
   </div>
@@ -43,11 +47,12 @@ import rrOperation from '@crud/RR.operation'
 import crudOperation from '@crud/CRUD.operation'
 import udOperation from '@crud/UD.operation'
 import pagination from '@crud/Pagination'
+import WinList from './win/index'
 
 const defaultForm = { actiId: null, theme: null, deptId: null, address: null, dateTime: null, joinPeople: null, id: null, type: null, status: null }
 export default {
   name: 'ActivityAll',
-  components: { pagination, crudOperation, rrOperation, udOperation },
+  components: { pagination, crudOperation, rrOperation, udOperation , WinList},
   mixins: [presenter(), header(), form(defaultForm), crud()],
   cruds() {
     return CRUD({ title: '所有活动', url: 'api/activityAll', idField: 'id', sort: 'id,desc', crudMethod: { ...crudActivityAll }})
@@ -71,10 +76,9 @@ export default {
         { key: 'theme', display_name: '活动主题' }
       ],
       currentActivityMsg: {},
-      // 设计
-      designTitle: '',
-      designVisible: false,
-      activeName: 'sign'
+      // 查看获奖信息弹框
+      winTitle: '',
+      winVisible: false,
     }
   },
   methods: {
@@ -82,15 +86,13 @@ export default {
     [CRUD.HOOK.beforeRefresh]() {
       return true
     },
-    // 设计
-    design(row) {
-      this.designVisible = true
-      this.designTitle = '设计' + row.theme
+    // 查看获奖信息
+    detailWinList(row) {
+      this.winVisible = true
+      this.winTitle = '设计' + row.theme
       this.currentActivityMsg = row
     },
-    handleTabClick() {
 
-    }
   }
 }
 </script>

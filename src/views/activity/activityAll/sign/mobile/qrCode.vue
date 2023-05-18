@@ -1,18 +1,17 @@
 <template>
-  <div class="a_tree_box">
+  <div class="qrCode">
     <div ref="qrCodeUrl" class="qrcode" />
   </div>
 </template>
 
 <script>
 import QRCode from 'qrcodejs2'
-// import {generateQR} from "../../../../../api/activitySignUrls";
 import { getSignQrcode } from '@/api/activitySignUrls'
 export default {
   name: 'QrCode',
   data() {
     return {
-      actiId: '1658118255048527872',
+      actiId: '',
       timer: undefined,
       qrcode: undefined
     }
@@ -37,10 +36,9 @@ export default {
   },
   methods: {
     creatQrCode() {
-      getSignQrcode('1658118255048527872').then(res => {
+      getSignQrcode(this.actiId).then(res => {
         console.log(res);
         return new QRCode(this.$refs.qrCodeUrl, {
-          // text: "https://blog.csdn.net/weixin_42601136", // 需要转换为二维码的内容
           text: res.signQrcode, // 需要转换为二维码的内容
           width: 360,
           height: 360,
@@ -65,12 +63,14 @@ export default {
 }
 </script>
 
-<!--<style lang="less" scoped>
-  // 树状表格样式
-  .a_tree_box {
-    width: calc(100vw - 300px);
-    height: 100%;
-    margin-bottom: 20px;
-    padding: 40px;
+<style lang="scss" scoped>
+  .qrCode {
+    width: 100%;
+    height: 100vh;
+    background: url("../../../../../assets/images/activity/technology.jpg");
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
-</style>-->
+</style>
